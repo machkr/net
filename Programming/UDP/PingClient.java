@@ -3,86 +3,92 @@ import java.net.*;
 import java.util.*;
 
 /*
- * Client to generate a ping requests over UDP.
- * Code has started in the PingServer.java
+ * Client to generate 10 ping requests over UDP.
  */
 
 public class PingClient
 {
-	private static final int MAX_TIMEOUT = 1000;	// milliseconds
+	// Maximum amount of time before timeout occurs (milliseconds).
+	private static final int MAX_TIMEOUT = 1000;
 
 	public static void main(String[] args) throws Exception
 	{
-		// Get command line arguments.
+		// Retrieve command line arguments.
 		if (args.length != 2)
 		{
-			System.out.println("Syntax: ./XXX [Host] [Port]");
+			System.out.println("ERROR: invalid arguments.\n");
+			System.out.println("SYNTAX: .java PingClient [Host] [Port]\n");
 			return;
 		}
 
-		// Port number to access
+		// Define host variable from command line argument.
+		InetAddress host;
+		host = InetAddress.getByName(args[0]);
+
+		// Define port variable from command line argument.
 		int port = Integer.parseInt(args[1]);
 
-		// Server to Ping (requires PingServer)
-		InetAddress server;
-		server = InetAddress.getByName(args[0]);
+		// Create a datagram socket for receiving and sending UDP
+		// packets through the port specified on the command line.
+		// DatagramSocket socket = new DatagramSocket(port);
+		DatagramSocket socket = new DatagramSocket();
+		socket.connect(new InetSocketAddress("localhost", port));
 
-		// Create a datagram socket for sending and receiving UDP packets
-		// through the port specified on the command line.
-		DatagramSocket socket = new DatagramSocket(port);
-
-		int seq_num = 0;
+		// Keep track of the sequence of packets sent.
+		int sequence = 0;
 
 		// Processing loop.
-		while (seq_num < 10)
+		while (sequence < 10)
 		{
-			// Timestamp in ms when we send it
+			// Timestamp in milliseconds.
 			Date now = new Date();
 			long timeSent = now.getTime();
 
-			// Create string to send, and transfer i to a Byte Array
-			String str = "PING " + seq_num + " " + timeSent + " \r\n";
+			// Generate the string message to send.
+			String str = "PING " + sequence + " " + timeSent + " \r\n";
 			byte[] buf = new byte[1024];
 			buf = str.getBytes();
 
-			// Create a datagram packet to send as an UDP packet.
-			DatagramPacket ping = new DatagramPacket(buf, buf.length, server, port);
+			// Create a datagram packet using the above buffer and provided host/port.
+			DatagramPacket ping = new DatagramPacket(buf, buf.length, host, port);
 
-			// Send the Ping datagram to the specified server
+			// Send the datagram.
 			socket.send(ping);
 
-			// Try to receive the packet - but it can fail (timeout)
+			// Try to receive response from host.
 			try
 			{
-				// Set up the timeout 1000 ms = 1 sec
+				// Define timeout (see global variable).
 				socket.setSoTimeout(MAX_TIMEOUT);
-				// Set up an UPD packet for recieving
+
+				// Set up a UDP packet for receiving.
 				DatagramPacket response = new DatagramPacket(new byte[1024], 1024);
-				// Try to receive the response from the ping
+
+				// Attempt to receive response -- may throw an exception.
 				socket.receive(response);
-				// If the response is received, the code will continue here, otherwise it will continue in the catch
 				
 				// Timestamp for when we received the packet
 				now = new Date();
 				long timeReceived = now.getTime();
 
-				// Print the packet and the delay
+				// Print the received data.
 				printData(response, timeReceived - timeSent);
 			}
+			// If the response timed out...
 			catch (IOException e)
 			{
-				// Print which packet has timed out
-				System.out.println("Timeout for packet " + seq_num);
+				// ...print the packet that timed out.
+				System.out.println("\nPacket " + sequence + " timed out.");
 			}
 
-			// next packet
-			seq_num++;
+			// Iterate to next packet.
+			sequence++;
 		}
 	}
 
    /* 
     * Print ping data to the standard output stream.
-    * slightly changed from PingServer
+    * Modified slightly from PingServer.java to display delay.
     */
 	private static void printData(DatagramPacket request, long delayTime) throws Exception
 	{
@@ -106,7 +112,7 @@ public class PingClient
 		String line = br.readLine();
 
 		// Print host address and data received from it.
-		System.out.println("Received from " + request.getAddress().getHostAddress() + ": " +
-			new String(line) + " Delay: " + delayTime );
+		System.out.println("\nReceived from " + request.getAddress().getHostAddress() + ": " +
+			new String(line) + " | Delay of " + delayTime);
    }
 }

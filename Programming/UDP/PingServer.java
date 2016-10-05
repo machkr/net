@@ -13,27 +13,29 @@ public class PingServer
 
 	public static void main(String[] args) throws Exception
 	{
-		// Get command line argument.
+		// Retrieve command line argument
 		if (args.length != 1)
 		{
-			System.out.println("Required arguments: port");
+			System.out.println("ERROR: invalid arguments.\n");
+			System.out.println("SYNTAX: java PingServer [Port]\n");
 			return;
 		}
 
+		// Define port variable from command line argument.
 		int port = Integer.parseInt(args[0]);
 
-		// Create random number generator for use in simulating
-		// packet loss and network delay.
+		// Create random number generator for use in
+		// simulating packet loss and network delay.
 		Random random = new Random();
 
-		// Create a datagram socket for receiving and sending UDP packets
-		// through the port specified on the command line.
+		// Create a datagram socket for receiving and sending UDP
+		// packets through the port specified on the command line.
 		DatagramSocket socket = new DatagramSocket(port);
 
 		// Processing loop.
 		while (true)
 		{
-			// Create a datagram packet to hold incomming UDP packet.
+			// Create a datagram packet to hold incoming UDP packet.
 			DatagramPacket request = new DatagramPacket(new byte[1024], 1024);
 
 			// Block until the host receives a UDP packet.
@@ -42,16 +44,16 @@ public class PingServer
 			// Print the received data.
 			printData(request);
 
-			// Decide whether to reply, or simulate packet loss.
+			// Decide whether to reply or to simulate packet loss.
 			if (random.nextDouble() < LOSS_RATE)
 			{
-				System.out.println(" Reply not sent.");
+				System.out.println("Reply was not sent.\n");
 				continue;
 			}
 
 			if (random.nextDouble() < LOSS_RATE)
 			{
-				System.out.println(" Reply not sent.");
+				System.out.println("Reply was not sent.\n");
 				continue;
 			}
 			else
@@ -65,7 +67,9 @@ public class PingServer
 				byte[] buf = request.getData();
 				DatagramPacket reply = new DatagramPacket(buf, buf.length, clientHost, clientPort);
 				socket.send(reply);
-				System.out.println(" Reply sent.");
+
+				// Notify user of successful response.
+				System.out.println("Reply sent successfully.\n");
 			}
 		}
 	}
@@ -96,6 +100,6 @@ public class PingServer
 
 		// Print host address and data received from it.
 		System.out.println("Received from " + request.getAddress().getHostAddress() + ": " +
-			new String(line) );
+			new String(line) + "\n");
 	}
 }
