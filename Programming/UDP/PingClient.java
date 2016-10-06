@@ -3,13 +3,14 @@ import java.net.*;
 import java.util.*;
 
 /*
- * Client to generate 10 ping requests over UDP.
+ * Client to generate 10 ping requests using UDP.
  */
 
 public class PingClient
 {
 	// Maximum amount of time before timeout occurs (milliseconds).
 	private static final int MAX_TIMEOUT = 1000;
+	private static int arr[10];
 
 	public static void main(String[] args) throws Exception
 	{
@@ -31,7 +32,7 @@ public class PingClient
 		// Connect to the datagram socket for receiving and sending UDP
 		// packets through the port specified on the command line.
 		DatagramSocket socket = new DatagramSocket();
-		socket.connect(new InetSocketAddress("localhost", port));
+		socket.connect(new InetSocketAddress(host, port));
 
 		// Keep track of the sequence of packets sent.
 		int sequence = 0;
@@ -70,12 +71,19 @@ public class PingClient
 				now = new Date();
 				long timeReceived = now.getTime();
 
+				// Calculate round trip time and enter it into the array
+				int rtt = timeReceived - timeSent;
+				arr[sequence] = rtt;
+
 				// Print the received data.
-				printData(response, timeReceived - timeSent);
+				printData(response, rtt);
 			}
 			// If the response timed out...
 			catch (IOException e)
 			{
+				// Enter round trip time as MAX_TIMEOUT in array
+				arr[sequence] = MAX_TIMEOUT;
+
 				// ...print the packet that timed out.
 				System.out.println("\nPacket " + sequence + " timed out.");
 			}
@@ -83,13 +91,32 @@ public class PingClient
 			// Iterate to next packet.
 			sequence++;
 		}
+
+		// Calculate average round trip time
+		int sum = 0;
+		int num = 0;
+		double avg;
+
+		for(int i = 0; i < 10; i++)
+		{
+			sum += arr[i];
+			if(arr[i] < MAX_TIMEOUT) num++;
+		}
+
+		avg = (double) sum/num;
+
+		// Output minimum, maximum, and average round trip time
+		System.out.println("\nRound Trip Time\n");
+		System.out.println("\tMIN: " + Collections.min(Arrays.asList(arr)) + " ms\n");
+		System.out.println("\tMAX: " + Collections.max(Arrays.asList(arr)) + " ms\n");
+		System.out.println("\tAVG: " + avg + " ms\n\n");
 	}
 
    /* 
     * Print ping data to the standard output stream.
-    * Modified slightly from PingServer.java to display delay.
+    * Modified slightly from PingServer.java to display round trip time.
     */
-	private static void printData(DatagramPacket request, long delayTime) throws Exception
+	private static void printData(DatagramPacket request, long rtt) throws Exception
 	{
 		// Obtain references to the packet's array of bytes.
 		byte[] buf = request.getData();
@@ -112,6 +139,6 @@ public class PingClient
 
 		// Print host address and data received from it.
 		System.out.println("\nReceived from " + request.getAddress().getHostAddress() + ": " +
-			new String(line) + " | Delay of " + delayTime);
+			new String(line) + " | Round Trip Time: " + rtt + " ms");
    }
 }

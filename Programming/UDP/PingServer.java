@@ -3,7 +3,7 @@ import java.net.*;
 import java.util.*;
 
 /*
-* Server to process ping requests over UDP.
+* Server to process ping requests using UDP.
 */
 
 public class PingServer
