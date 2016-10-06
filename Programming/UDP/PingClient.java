@@ -28,9 +28,8 @@ public class PingClient
 		// Define port variable from command line argument.
 		int port = Integer.parseInt(args[1]);
 
-		// Create a datagram socket for receiving and sending UDP
+		// Connect to the datagram socket for receiving and sending UDP
 		// packets through the port specified on the command line.
-		// DatagramSocket socket = new DatagramSocket(port);
 		DatagramSocket socket = new DatagramSocket();
 		socket.connect(new InetSocketAddress("localhost", port));
 
