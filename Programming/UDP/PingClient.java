@@ -10,7 +10,6 @@ public class PingClient
 {
 	// Maximum amount of time before timeout occurs (milliseconds).
 	private static final int MAX_TIMEOUT = 1000;
-	private static int arr[10];
 
 	public static void main(String[] args) throws Exception
 	{
@@ -34,8 +33,9 @@ public class PingClient
 		DatagramSocket socket = new DatagramSocket();
 		socket.connect(new InetSocketAddress(host, port));
 
-		// Keep track of the sequence of packets sent.
+		// Keep track of the sequence of packets sent and their round trip times.
 		int sequence = 0;
+		long[] arr = new long[10];
 
 		// Processing loop.
 		while (sequence < 10)
@@ -72,17 +72,16 @@ public class PingClient
 				long timeReceived = now.getTime();
 
 				// Calculate round trip time and enter it into the array
-				int rtt = timeReceived - timeSent;
-				arr[sequence] = rtt;
+				arr[sequence] = timeReceived - timeSent;
 
 				// Print the received data.
-				printData(response, rtt);
+				printData(response, timeReceived - timeSent);
 			}
 			// If the response timed out...
 			catch (IOException e)
 			{
 				// Enter round trip time as MAX_TIMEOUT in array
-				arr[sequence] = MAX_TIMEOUT;
+				arr[sequence] = (long) MAX_TIMEOUT;
 
 				// ...print the packet that timed out.
 				System.out.println("\nPacket " + sequence + " timed out.");
@@ -92,24 +91,46 @@ public class PingClient
 			sequence++;
 		}
 
-		// Calculate average round trip time
-		int sum = 0;
-		int num = 0;
-		double avg;
-
-		for(int i = 0; i < 10; i++)
+		// Calculate minimum round trip time
+		long min = Long.MAX_VALUE;
+		for (int i = 0; i < arr.length; i++)
 		{
-			sum += arr[i];
-			if(arr[i] < MAX_TIMEOUT) num++;
+			if(arr[i] < min) min = arr[i];
 		}
 
-		avg = (double) sum/num;
+		// Calculate maximum round trip time
+		long max = Long.MIN_VALUE;
+		for (int i = 0; i < arr.length; i++)
+		{
+			if(arr[i] > max && arr[i] < MAX_TIMEOUT) max = arr[i];
+		}
+
+		// Calculate average round trip time
+		long sum = 0;
+		int num = 0;
+		long avg;
+
+		for(int i = 0; i < arr.length; i++)
+		{
+			if(arr[i] < MAX_TIMEOUT)
+			{
+				sum += arr[i];
+				num++;
+			}
+		}
+
+		avg = (long) sum / num;
+
+		// Calculate hit/miss rates
+		int hit = num * 10;
+		int miss = (10 - num) * 10;
 
 		// Output minimum, maximum, and average round trip time
-		System.out.println("\nRound Trip Time\n");
-		System.out.println("\tMIN: " + Collections.min(Arrays.asList(arr)) + " ms\n");
-		System.out.println("\tMAX: " + Collections.max(Arrays.asList(arr)) + " ms\n");
-		System.out.println("\tAVG: " + avg + " ms\n\n");
+		System.out.println("\nRound Trip Time");
+		System.out.println("  Minimum: " + min + " ms");
+		System.out.println("  Maximum: " + max + " ms");
+		System.out.println("  Average: " + avg + " ms\n");
+		System.out.println("Hit: " + hit + "%, Miss: " + miss + "%\n");
 	}
 
    /* 
