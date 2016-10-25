@@ -1,3 +1,2 @@
 #Computer Networks I
-###Java Socket Programming
-UDP Client and Server
+###Java Socket Programming - UDP Client and Server
