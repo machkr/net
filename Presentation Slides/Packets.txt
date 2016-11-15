@@ -1,0 +1,796 @@
+1 - GET http://www.netflix.com/WiPlayer?movieid=60027274
+
+2 - GET http://www.netflix.com/pages/watchNow/player/silverlight/SLPlayer.xap and other .js files
+
+3 - POST http://www.netflix.com/SilverlightEvent
+
+	Cookies
+	[
+		VisitorId=452d8682-a1ff-41a3-91b4-8d009523e263;
+		country=1;
+		NetflixCookies=persistent;
+		asearch=123800673359910109;
+		custTrans=P7287280082922120268362091157724811;
+		NetflixShopperId=G-P7287280082922120268362091157724811-1;
+		vstCnt=-6~-6~1238049625732;
+		NetflixSpeed=700;
+		NetflixHiSpeed=10679~1238006753246~1~0~03/25/2009;
+		lastHitTime=1238074825038;
+		nflxsid=108.1238074825038;
+		NetflixSession=108.d81dbe7c-519e-47fd-ae30-e41c44b7c129;
+		NSC_xxx.ofugmjy.dpn=4493165c2d69
+	]
+
+	Post Data
+	[
+		type[Ready]
+		movieid[60027274]
+		trkid[null]
+		ssv[]
+		desc[]
+		svr[%7B108%7D]
+	]
+
+4 - GET https://agmoviecontrol.netflix.com/clientaccesspolicy.xml
+		
+	Response
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<access-policy>
+			<cross-domain-access>
+				<policy>
+					<allow-from http-request-headers="Content-Type,X-HMAC,X-CTicket,X-ESN,X-ShopperID">
+						<domain uri="http://netflix.com"/>
+						<domain uri="https://netflix.com"/>
+						<domain uri="http://*.netflix.com"/>
+						<domain uri="https://*.netflix.com"/>
+					</allow-from>
+					<grant-to>
+						<resource path="/nccp/controller" include-subpaths="false"/>
+					</grant-to>
+				</policy>
+			</cross-domain-access>
+		</access-policy>
+	]
+
+5 - POST http://ocsp.verisign.com/
+	
+	Post Data
+	[
+		0q0o0M0K0I0 __+_______t˜¨_)¦˜¢×jÀ_)¶ö¡__P__oì¯ ÝŠ¤ïõ*_g-?U‚¼×ï%__n—þÒ~MKc_Ä°%¼tÊ•¢_0_0__ +_____0___...
+	]
+
+6 - POST https://agmoviecontrol.netflix.com/nccp/controller
+
+	Cookies
+	[
+		VisitorId=452d8682-a1ff-41a3-91b4-8d009523e263;...
+	]
+
+	Headers
+	[
+		X-ShopperID=G-P7287280082922120268362091157724811-1
+		X-ESN=SLMAC-J16WPKED4PW4TYXMRGXZ6W1AZR   ===> This is the 'serial number' associated with the playback device
+		X-HMAC=0/XJ0mK8WNWsXodXuwVeprB7lS0L1QowVgMaDc4GNg0=
+	]
+
+	Post Data
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:request version="2.4" xmlns:nccp="http://www.netflix.com/eds/nccp/2.4">
+			<nccp:header>
+				<nccp:softwareversion>1.0.9.2</nccp:softwareversion>
+				<nccp:payload>AhAPz...</nccp:payload>
+			</nccp:header>
+			<nccp:ping />
+		</nccp:request>
+	]
+
+	Response
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:response xmlns:nccp="http://www.netflix.com/eds/nccp/2.4" version="2.4">
+			<nccp:parameters>
+				<nccp:retrycontrol>10</nccp:retrycontrol>
+				<nccp:mintimeout>60</nccp:mintimeout>
+				<nccp:lowfrequencypollinterval>28800</nccp:lowfrequencypollinterval>
+				<nccp:mediumfrequencypollinterval>60</nccp:mediumfrequencypollinterval>
+				<nccp:highfrequencypollinterval>15</nccp:highfrequencypollinterval>
+				<nccp:hightomediumpollswitchinterval>300</nccp:hightomediumpollswitchinterval>
+				<nccp:mediumtolowpollswitchinterval>600</nccp:mediumtolowpollswitchinterval>
+				<nccp:loginterval>60</nccp:loginterval>
+				<nccp:maxlogsize>8000000</nccp:maxlogsize>
+				<nccp:loglevel>error</nccp:loglevel>
+				<nccp:supportphone>866-579-7113</nccp:supportphone>
+			</nccp:parameters>
+			<nccp:result method="ping">
+				<nccp:status>
+					<nccp:success>true</nccp:success>
+				</nccp:status>
+			</nccp:result>
+			<nccp:responseheader>
+				<nccp:payload>AhAJ29A...</nccp:payload>
+			</nccp:responseheader>
+		</nccp:response>
+	]
+
+7 - POST https://agmoviecontrol.netflix.com/nccp/controller 
+
+	Cookies
+	[
+		VisitorId=452d8682-a1ff-41a3-91b4-8d009523e263;...
+	]
+
+	Headers
+	[
+		X-ShopperID=G-P7287280082922120268362091157724811-1
+		X-ESN=SLMAC-J16WPKED4PW4TYXMRGXZ6W1AZR
+	]
+
+	Post Data
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:request version="2.4" xmlns:nccp="http://www.netflix.com/eds/nccp/2.4">
+			<nccp:header>
+				<nccp:softwareversion>1.0.9.2</nccp:softwareversion>  
+				<nccp:payload>AhBFvlzpbA8...</nccp:payload>
+			</nccp:header>
+			<nccp:register>
+				<nccp:regtype>1</nccp:regtype>    
+				<nccp:payload>AhCfu8N/RaOXm6...</nccp:payload>
+			</nccp:register>
+		</nccp:request>
+	]
+
+	Response
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:response xmlns:nccp="http://www.netflix.com/eds/nccp/2.4" version="2.4">
+			<nccp:parameters>
+				<nccp:retrycontrol>10</nccp:retrycontrol>
+				<nccp:mintimeout>60</nccp:mintimeout>
+				<nccp:lowfrequencypollinterval>28800</nccp:lowfrequencypollinterval>
+				<nccp:mediumfrequencypollinterval>60</nccp:mediumfrequencypollinterval>
+				<nccp:supportphone>866-579-7113</nccp:supportphone>
+			</nccp:parameters>
+			<nccp:result method="register">
+				<nccp:registrationdata>          
+					<nccp:payload>AhDzu8gYcGl...</nccp:payload>
+					<nccp:userid>Anita L</nccp:userid>
+					<nccp:userdescription/>
+				</nccp:registrationdata>
+				<nccp:status>
+					<nccp:success>true</nccp:success>
+				</nccp:status>
+			</nccp:result>
+			<nccp:responseheader>
+				<nccp:payload>AhD0/2EFvN...</nccp:payload>
+			</nccp:responseheader>
+		</nccp:response>
+	]
+
+
+
+8 - POST https://agmoviecontrol.netflix.com/nccp/controller
+
+	Cookies
+	[
+		VisitorId=452d8682-a1ff-41a3-91b4-8d009523e263;...
+	]
+
+	Headers
+	[
+		X-CTicket=AQAAAA...
+	]
+
+	Post Data
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:request version="2.4" xmlns:nccp="http://www.netflix.com/eds/nccp/2.4">
+			<nccp:header>
+				<nccp:softwareversion>1.0.9.2</nccp:softwareversion>   
+				<nccp:payload>AhAK...</nccp:payload>
+			</nccp:header>
+			<nccp:moviemetadata>
+				<nccp:movieid>60027274</nccp:movieid>
+			</nccp:moviemetadata>
+		</nccp:request>
+	]
+
+	Response
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:response xmlns:nccp="http://www.netflix.com/eds/nccp/2.4" version="2.4">
+			<nccp:parameters>
+				<nccp:retrycontrol>10</nccp:retrycontrol>
+				<nccp:mintimeout>60</nccp:mintimeout>
+				<nccp:lowfrequencypollinterval>28800</nccp:lowfrequencypollinterval>
+				<nccp:mediumfrequencypollinterval>60</nccp:mediumfrequencypollinterval>
+				<nccp:supportphone>866-579-7113</nccp:supportphone>
+			</nccp:parameters>
+			<nccp:result method="moviemetadata">
+				<nccp:moviedata expiration="1238161231" movie_id="60027274">
+					<nccp:contenttype>Movie</nccp:contenttype>
+					<nccp:name>Who Framed Roger Rabbit?: Special Edition</nccp:name>
+					<nccp:moviepreviewurl format="SD">http://index.ehub.netflix.com/item/?x=z6_hMJlSrBUPY-LDPORZ1TnSQJMq3HbH_da3BYLMYA-HTP-y5PJqh8YQmMr7TpseJF8LZ87cKkkTwdnvoSS6EwlEv2IOa-3LwLxQQuk-g0H_cr...</nccp:moviepreviewurl>
+					<nccp:boxart>
+						<nccp:resolution>
+							<nccp:width>284</nccp:width>
+							<nccp:height>405</nccp:height>
+						</nccp:resolution>
+						<nccp:pixelaspect>
+							<nccp:width>1</nccp:width>
+							<nccp:height>1</nccp:height>
+						</nccp:pixelaspect>
+						<nccp:downloadurl>http://cdn-4.nflximg.com/us/boxshots/ghd/60027274.jpg</nccp:downloadurl>
+					</nccp:boxart>
+					<nccp:boxart>
+						<nccp:resolution>
+							<nccp:width>210</nccp:width>
+							<nccp:height>270</nccp:height>
+						</nccp:resolution>
+						<nccp:pixelaspect>
+							<nccp:width>8</nccp:width>
+							<nccp:height>9</nccp:height>
+						</nccp:pixelaspect>
+						<nccp:downloadurl>http://cdn-4.nflximg.com/us/boxshots/gsd/60027274.jpg</nccp:downloadurl>
+					</nccp:boxart>
+					<nccp:synopsis>
+						Mixing live action with animation wizardry, Robert Zemeckis's cinematic groundbreaker stars Bob Hoskins as detective Eddie Valiant, a gruff gumshoe who reluctantly agrees to take the case of Roger Rabbit, a zany cartoon star framed for murder.
+					</nccp:synopsis>
+					<nccp:releasedate>1988</nccp:releasedate>
+					<nccp:runtime>6242</nccp:runtime>
+					<nccp:actors>
+						<nccp:actor>Bob Hoskins</nccp:actor>
+						<nccp:actor>Christopher Lloyd</nccp:actor>
+						<nccp:actor>Joanna Cassidy</nccp:actor>
+						<nccp:actor>Charles Fleischer</nccp:actor>
+						<nccp:actor>Stubby Kaye</nccp:actor>
+						<nccp:actor>Alan Tilvern</nccp:actor>
+						<nccp:actor>Richard Le Parmentier</nccp:actor>
+						<nccp:actor>Lou Hirsch</nccp:actor>
+						<nccp:actor>Betsy Brantley</nccp:actor>
+						<nccp:actor>Kathleen Turner</nccp:actor>
+						<nccp:actor>Joel Silver</nccp:actor>
+						<nccp:actor>Paul Springer</nccp:actor>
+					</nccp:actors>
+					<nccp:directors>
+						<nccp:director>Robert Zemeckis</nccp:director>
+					</nccp:directors>
+					<nccp:mpaarating>
+						<nccp:category>PG</nccp:category>
+						<nccp:explanation>adult content, mild violence.</nccp:explanation>
+					</nccp:mpaarating>
+					<nccp:genres>
+						<nccp:genre>Action Comedies</nccp:genre>
+						<nccp:genre>Family Comedies</nccp:genre>
+						<nccp:genre>Family Animation</nccp:genre>
+					</nccp:genres>
+					<nccp:availability>
+						<nccp:window>
+							<nccp:window_start>1229068800</nccp:window_start>
+							<nccp:window_end>1253862000</nccp:window_end>
+						</nccp:window>
+					</nccp:availability>
+				</nccp:moviedata>
+				<nccp:status>
+					<nccp:success>true</nccp:success>
+				</nccp:status>
+			</nccp:result>
+			<nccp:responseheader>
+				<nccp:payload>AhDpNesHphSsZuikXE7Y,,,</nccp:payload>
+			</nccp:responseheader>
+			</nccp:response>
+	]
+
+
+
+9 - POST https://agmoviecontrol.netflix.com/nccp/controller
+
+	Cookies
+	[
+		VisitorId=452d8682-a1ff-41a3-91b4-8d009523e263;...
+	]
+
+	Headers
+	[
+		X-CTicket=AQAAAA...
+	]
+
+	Post Data
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:request version="2.4" xmlns:nccp="http://www.netflix.com/eds/nccp/2.4">
+			<nccp:header>
+				<nccp:softwareversion>1.0.9.2</nccp:softwareversion>
+				<nccp:payload>AhCXejlh4G46TL+RcV4...</nccp:payload>
+			</nccp:header>
+			<nccp:usermoviemetadata>
+				<nccp:movieid>60027274</nccp:movieid>
+			</nccp:usermoviemetadata>
+		</nccp:request>
+	]
+
+	Response
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:response xmlns:nccp="http://www.netflix.com/eds/nccp/2.4" version="2.4">
+			<nccp:parameters>
+				<nccp:retrycontrol>10</nccp:retrycontrol>
+				<nccp:mintimeout>60</nccp:mintimeout>
+				<nccp:lowfrequencypollinterval>28800</nccp:lowfrequencypollinterval>
+				<nccp:mediumfrequencypollinterval>60</nccp:mediumfrequencypollinterval>
+				<nccp:supportphone>866-579-7113</nccp:supportphone>
+			</nccp:parameters>
+			<nccp:result method="usermoviemetadata">
+				<nccp:usermoviedata expiration="1238078432" movie_id="60027274">
+					<nccp:cmstarrating>36</nccp:cmstarrating>
+					<nccp:userstarrating>0</nccp:userstarrating>
+					<nccp:bookmark timestamp="1238004856">237</nccp:bookmark>
+				</nccp:usermoviedata>
+				<nccp:status>
+					<nccp:success>true</nccp:success>
+				</nccp:status>
+			</nccp:result>
+			<nccp:responseheader>
+				<nccp:payload>AhAH22f8yTiXaDw9J..</nccp:payload>
+			</nccp:responseheader>
+		</nccp:response>
+	]
+
+10 - POST https://agmoviecontrol.netflix.com/nccp/controller
+
+	Cookies
+	[
+		VisitorId=452d8682-a1ff-41a3-91b4-8d009523e263;...
+	]
+
+	Headers
+	[
+		X-CTicket=AQAAAA...
+	]
+	
+	Post Data
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:request version="2.4" xmlns:nccp="http://www.netflix.com/eds/nccp/2.4">
+			<nccp:header>
+				<nccp:softwareversion>1.0.9.2</nccp:softwareversion>
+				<nccp:payload>AhBanzqYq3PdeIU...</nccp:payload>
+			</nccp:header>
+			<nccp:authorization>
+				<nccp:movieid>60027274</nccp:movieid>
+				<nccp:trackerid>329008132</nccp:trackerid>
+				<nccp:contentprofiles>
+					<nccp:contentprofile>playready-vc1ap-none</nccp:contentprofile>
+					<nccp:contentprofile>playready-none-wma.2</nccp:contentprofile>
+				</nccp:contentprofiles>
+			</nccp:authorization>
+		</nccp:request>
+	]
+
+	Response
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:response xmlns:nccp="http://www.netflix.com/eds/nccp/2.4" version="2.4">
+			<nccp:parameters>
+				<nccp:retrycontrol>10</nccp:retrycontrol>
+				<nccp:mintimeout>60</nccp:mintimeout>
+				<nccp:lowfrequencypollinterval>28800</nccp:lowfrequencypollinterval>
+				<nccp:mediumfrequencypollinterval>60</nccp:mediumfrequencypollinterval>
+				<nccp:supportphone>866-579-7113</nccp:supportphone>
+			</nccp:parameters>
+			<nccp:result method="authorization">
+				<nccp:authorization movie_id="60027274">
+				<nccp:payload>AhBMDsmNew2,,,,</nccp:payload>
+				<nccp:cdns>
+					<nccp:cdn>
+						<nccp:name>limelight</nccp:name>
+						<nccp:cdnid>4</nccp:cdnid>
+						<nccp:rank>1</nccp:rank>
+						<nccp:weight>140</nccp:weight>
+					</nccp:cdn>
+					<nccp:cdn>
+						<nccp:name>level3</nccp:name>
+						<nccp:cdnid>6</nccp:cdnid>
+						<nccp:rank>2</nccp:rank>
+						<nccp:weight>120</nccp:weight>
+					</nccp:cdn>
+					<nccp:cdn>
+						<nccp:name>akamai</nccp:name>
+						<nccp:cdnid>9</nccp:cdnid>
+						<nccp:rank>3</nccp:rank>
+						<nccp:weight>100</nccp:weight>
+					</nccp:cdn>
+				</nccp:cdns>
+				<nccp:trickplay>
+					<nccp:resolution>
+						<nccp:width>240</nccp:width>
+						<nccp:height>120</nccp:height>
+					</nccp:resolution>
+					<nccp:pixelaspect>
+						<nccp:width>8</nccp:width>
+						<nccp:height>9</nccp:height>
+					</nccp:pixelaspect>
+					<nccp:trickplayinterval>10</nccp:trickplayinterval>
+					<nccp:size>0</nccp:size>
+					<nccp:trickplayid>11748911</nccp:trickplayid>
+					<nccp:downloadurls>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>4</nccp:cdnid>
+							<nccp:url>http://netflix-274.vo.llnwd.net/s/s1/911/11748911.bif?p=53&amp;e=1238103632&amp;h=2beb62b1de51b4872978787fc98d075b</nccp:url>
+						</nccp:downloadurl>
+					</nccp:downloadurls>
+				</nccp:trickplay>
+				<nccp:trickplay>
+					<nccp:resolution>
+						<nccp:width>320</nccp:width>
+						<nccp:height>240</nccp:height>
+					</nccp:resolution>
+					<nccp:pixelaspect>
+						<nccp:width>1</nccp:width>
+						<nccp:height>1</nccp:height>
+					</nccp:pixelaspect>
+					<nccp:trickplayinterval>10</nccp:trickplayinterval>
+					<nccp:size>0</nccp:size>
+					<nccp:trickplayid>11749134</nccp:trickplayid>
+					<nccp:downloadurls>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>4</nccp:cdnid>
+							<nccp:url>http://netflix-274.vo.llnwd.net/s/s0/134/11749134.bif?p=53&amp;e=1238103632&amp;h=7736368f0178add7d47f010c9d5e3678</nccp:url>
+						</nccp:downloadurl>
+					</nccp:downloadurls>
+				</nccp:trickplay>
+				<nccp:downloadable>
+					<nccp:downloadableid>1811192541</nccp:downloadableid>
+					<nccp:size>1067043503</nccp:size>
+					<nccp:bitrate>1500</nccp:bitrate>
+					<nccp:contentprofile>playready-vc1ap-none</nccp:contentprofile>
+					<nccp:downloadurls>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>4</nccp:cdnid>
+							<nccp:url>http://netflix-274.vo.llnwd.net/s/s1/541/1811192541.wmv?p=55&amp;e=1238103632&amp;h=c2ff68a253b2602e9f905479db3e0d3d</nccp:url>
+						</nccp:downloadurl>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>6</nccp:cdnid>
+							<nccp:url>http://scdn.nflximg.com/541/1811192541.wmv?etime=20090326214032&amp;encoded=06ffaf42a48e1b9989ff0</nccp:url>
+						</nccp:downloadurl>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>9</nccp:cdnid>
+							<nccp:url>http://netflix274.as.nflximg.com.edgesuite.net/sa0/541/1811192541.wmv?token=1238103632_f203793536e2faa1cadfe62c9fa4c1f1</nccp:url>
+						</nccp:downloadurl>
+					</nccp:downloadurls>
+					<nccp:resolution>
+						<nccp:width>720</nccp:width>
+						<nccp:height>404</nccp:height>
+					</nccp:resolution>
+					<nccp:pixelaspect>
+						<nccp:width>1</nccp:width>
+						<nccp:height>1</nccp:height>
+					</nccp:pixelaspect>
+				</nccp:downloadable>
+				<nccp:downloadable>
+					<nccp:downloadableid>447071373</nccp:downloadableid>
+					<nccp:size>336635503</nccp:size>
+					<nccp:bitrate>500</nccp:bitrate>
+					<nccp:contentprofile>playready-vc1ap-none</nccp:contentprofile>
+					<nccp:downloadurls>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>4</nccp:cdnid>
+							<nccp:url>http://netflix-274.vo.llnwd.net/s/s1/373/447071373.wmv?p=54&amp;e=1238103632&amp;h=c3f25ccba20bc40f1a368b8bb773872f</nccp:url>
+						</nccp:downloadurl>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>6</nccp:cdnid>
+							<nccp:url>http://scdn.nflximg.com/373/447071373.wmv?etime=20090326214032&amp;encoded=02ced5638045ab67ce3c1</nccp:url>
+						</nccp:downloadurl>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>9</nccp:cdnid>
+							<nccp:url>http://netflix274.as.nflximg.com.edgesuite.net/sa0/373/447071373.wmv?token=1238103632_c62a3f2f2d837e1d794c4059670c3e4b</nccp:url>
+						</nccp:downloadurl>
+					</nccp:downloadurls>
+					<nccp:resolution>
+						<nccp:width>512</nccp:width>
+						<nccp:height>288</nccp:height>
+					</nccp:resolution>
+					<nccp:pixelaspect>
+						<nccp:width>1</nccp:width>
+						<nccp:height>1</nccp:height>
+					</nccp:pixelaspect>
+				</nccp:downloadable>
+				<nccp:downloadable>
+					<nccp:downloadableid>1665991977</nccp:downloadableid>
+					<nccp:size>101181995</nccp:size>
+					<nccp:bitrate>128</nccp:bitrate>
+					<nccp:contentprofile>playready-none-wma.2</nccp:contentprofile>
+					<nccp:downloadurls>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>4</nccp:cdnid>
+							<nccp:url>http://netflix-274.vo.llnwd.net/s/s1/977/1665991977.wma?p=55&amp;e=1238103632&amp;h=a96337fa9dbb194a06afdb965eb443ab</nccp:url>
+						</nccp:downloadurl>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>6</nccp:cdnid>
+							<nccp:url>http://scdn.nflximg.com/977/1665991977.wma?etime=20090326214032&amp;encoded=0e1bc7ee8d89129955dd7</nccp:url>
+						</nccp:downloadurl>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>9</nccp:cdnid>
+							<nccp:url>http://netflix274.as.nflximg.com.edgesuite.net/sa0/977/1665991977.wma?token=1238103632_4fd96b4d478151755fb32fe8f57c795d</nccp:url>
+						</nccp:downloadurl>
+					</nccp:downloadurls>
+					<nccp:resolution>
+						<nccp:width>0</nccp:width>
+						<nccp:height>0</nccp:height>
+					</nccp:resolution>
+					<nccp:pixelaspect>
+						<nccp:width>0</nccp:width>
+						<nccp:height>0</nccp:height>
+					</nccp:pixelaspect>
+				</nccp:downloadable>
+				<nccp:downloadable>
+					<nccp:downloadableid>1517743617</nccp:downloadableid>
+					<nccp:size>726955503</nccp:size>
+					<nccp:bitrate>1000</nccp:bitrate>
+					<nccp:contentprofile>playready-vc1ap-none</nccp:contentprofile>
+					<nccp:downloadurls>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>4</nccp:cdnid>
+							<nccp:url>http://netflix-274.vo.llnwd.net/s/s1/617/1517743617.wmv?p=55&amp;e=1238103632&amp;h=e62e3f907310e7800297c75763c9d010</nccp:url>
+						</nccp:downloadurl>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>6</nccp:cdnid>
+							<nccp:url>http://scdn.nflximg.com/617/1517743617.wmv?etime=20090326214032&amp;encoded=0cf0590bbf111dc382707</nccp:url>
+						</nccp:downloadurl>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>9</nccp:cdnid>
+							<nccp:url>http://netflix274.as.nflximg.com.edgesuite.net/sa0/617/1517743617.wmv?token=1238103632_89150c341eadc937545596c0ec06bb16</nccp:url>
+						</nccp:downloadurl>
+					</nccp:downloadurls>
+					<nccp:resolution>
+						<nccp:width>640</nccp:width>
+						<nccp:height>360</nccp:height>
+					</nccp:resolution>
+					<nccp:pixelaspect>
+						<nccp:width>1</nccp:width>
+						<nccp:height>1</nccp:height>
+					</nccp:pixelaspect>
+				</nccp:downloadable>
+				<nccp:downloadable>
+					<nccp:downloadableid>1756755552</nccp:downloadableid>
+					<nccp:size>50596179</nccp:size>
+					<nccp:bitrate>64</nccp:bitrate>
+					<nccp:contentprofile>playready-none-wma.2</nccp:contentprofile>
+					<nccp:downloadurls>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>4</nccp:cdnid>
+							<nccp:url>http://netflix-274.vo.llnwd.net/s/s0/552/1756755552.wma?p=55&amp;e=1238103632&amp;h=77be596799a1fbb86b3ebb6d5bf56262</nccp:url>
+						</nccp:downloadurl>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>6</nccp:cdnid>
+							<nccp:url>http://scdn.nflximg.com/552/1756755552.wma?etime=20090326214032&amp;encoded=002ad18828d1fb8f6349e</nccp:url>
+						</nccp:downloadurl>
+						<nccp:downloadurl>
+							<nccp:expiration>1238103632</nccp:expiration>
+							<nccp:cdnid>9</nccp:cdnid>
+							<nccp:url>http://netflix274.as.nflximg.com.edgesuite.net/sa0/552/1756755552.wma?token=1238103632_ebe1bfb41a294db67c0e9851728dadc9</nccp:url>
+						</nccp:downloadurl>
+					</nccp:downloadurls>
+					<nccp:resolution>
+						<nccp:width>0</nccp:width>
+						<nccp:height>0</nccp:height>
+					</nccp:resolution>
+					<nccp:pixelaspect>
+						<nccp:width>0</nccp:width>
+						<nccp:height>0</nccp:height>
+					</nccp:pixelaspect>
+				</nccp:downloadable>
+				<nccp:streamingparams/>
+				</nccp:authorization>
+					<nccp:status>
+						<nccp:success>true</nccp:success>
+					</nccp:status>
+			</nccp:result>
+			<nccp:responseheader>
+				<nccp:payload>AhC1LMwqGMAE,,,</nccp:payload>
+			</nccp:responseheader>
+		</nccp:response>
+	]
+
+11 - GET http://netflix-274.vo.llnwd.net/clientaccesspolicy.xml
+
+	Response
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<access-policy>
+			<cross-domain-access>
+				<policy>
+					<allow-from>
+						<domain uri="http://netflix.com"/>
+						<domain uri="https://netflix.com"/>
+						<domain uri="http://*.netflix.com"/>
+						<domain uri="https://*.netflix.com"/>
+					</allow-from>
+					<grant-to>
+						<resource path="/" include-subpaths="true"/>
+					</grant-to>
+				</policy>
+			</cross-domain-access>
+		</access-policy>
+	]
+
+12 - GET http://netflix-274.vo.llnwd.net/s/s1/373/447071373.wmv/range/0-23?p=54&e=1238103632&h=c3f25ccba20bc40f1a368b8bb773872f&random=764610574
+13 - GET http://netflix-274.vo.llnwd.net/s/s1/373/447071373.wmv/range/24-29964?p=54&e=1238103632&h=c3f25ccba20bc40f1a368b8bb773872f&random=1929392217
+14 - GET http://netflix-274.vo.llnwd.net/s/s1/373/447071373.wmv/range/15853965-16621964?p=54&e=1238103632&h=c3f25ccba20bc40f1a368b8bb773872f&random=755788936
+15 - GET http://netflix-274.vo.llnwd.net/s/s1/911/11748911.bif/range/0-63?p=53&e=1238103632&h=2beb62b1de51b4872978787fc98d075b&random=449197687
+16 - GET http://netflix-274.vo.llnwd.net/s/s1/911/11748911.bif/range/64-5071?p=53&e=1238103632&h=2beb62b1de51b4872978787fc98d075b&random=647189897
+
+17 - GET http://go.microsoft.com/fwlink/?LinkID=126298&ClientVer=7
+
+	Cookies
+	[
+		A=I&I=AxUFAAAAAADbCQAA+i0wbP5F70Am2yC8SJTVjg!!&M=1; MC1=GUID=a5a232132d2128449b5f06392af23dfe&HASH=1332&LV=20093&V=3
+	]
+
+	Response Redirect To GET http://services.silverlight.microsoft.com/Silverlight_RTM/default.jolt?Petition&ClientVer=7
+
+	Cookies
+	[
+		A=I&I=AxUFAAAAAADbCQAA+i0wbP5F70Am2yC8SJTVjg!!&M=1; MC1=GUID=a5a232132d2128449b5f06392af23dfe&HASH=1332&LV=20093&V=3
+	]
+
+	Response
+	[
+		wpfe_indi_acquire_redirect:http://services.silverlight.microsoft.com/Silverlight_RTM/default.jolt?Individualize
+	]
+
+18 - POST http://services.silverlight.microsoft.com/Silverlight_RTM/default.jolt?Individualize
+
+	Cookies
+	[
+		A=I&I=AxUFAAAAAADbCQAA+i0wbP5F70Am2yC8SJTVjg!!&M=1; MC1=GUID=a5a232132d2128449b5f06392af23dfe&HASH=1332&LV=20093&V=3
+	]
+
+	Post Data
+	[
+		ClientInfo=AAAARgAAAAEAAAAHAAAAAQAAADJRA6csu74ALvEHRjFH27l0A2daC1/rJQgyEa3c4fWW6ty3kXQvFYxZv6WSUf/XZjYXbw==
+	]
+
+	Response
+	[
+		500KB with DRM component and
+	]
+
+19 - POST https://agmoviecontrol.netflix.com/nccp/controller
+
+	Cookies
+	[
+		VisitorId=452d8682-a1ff-41a3-91b4-8d009523e263;...
+	]
+
+	Headers
+	[
+		X-CTicket=AQAAAA...
+	]
+
+	Post Data
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:request version="2.4" xmlns:nccp="http://www.netflix.com/eds/nccp/2.4">
+			<nccp:header>
+				<nccp:softwareversion>1.0.9.2</nccp:softwareversion>
+				<nccp:payload>AhCvbpN...</nccp:payload>
+			</nccp:header>
+			<nccp:license>
+				<nccp:mticket>AGtGV+ivlvp5yW9fvL2CK...</nccp:mticket>
+				<nccp:downloadableid>447071373</nccp:downloadableid>
+				<nccp:drmdata drmtype="PlayReady">
+					<nccp:soaprequest>PD94bWwgdmVy....</nccp:soaprequest>
+				</nccp:drmdata>
+			</nccp:license>
+		</nccp:request>
+	]
+
+	Response
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:response xmlns:nccp="http://www.netflix.com/eds/nccp/2.4" version="2.4">
+			<nccp:parameters>
+				<nccp:retrycontrol>10</nccp:retrycontrol>
+				<nccp:mintimeout>60</nccp:mintimeout>
+				<nccp:lowfrequencypollinterval>28800</nccp:lowfrequencypollinterval>
+				<nccp:mediumfrequencypollinterval>60</nccp:mediumfrequencypollinterval>
+				<nccp:supportphone>866-579-7113</nccp:supportphone>
+			</nccp:parameters>
+			<nccp:result method="license">
+				<nccp:license>
+					<nccp:payload encrypted="true">AhDrJiQQfnFu....</nccp:payload>
+				</nccp:license>
+				<nccp:status>
+					<nccp:success>true</nccp:success>
+				</nccp:status>
+			</nccp:result>
+			<nccp:responseheader>
+				<nccp:payload>AhA793tevgb1...</nccp:payload>
+			</nccp:responseheader>
+		</nccp:response>
+]
+
+20 - POST http://www.netflix.com/SilverlightEvent
+
+	Cookies
+	[
+		VisitorId=452d8682-a1ff-41a3-91b4-8d009523e263;...
+	]
+
+	Post Data
+	[
+		type[Playback+Success]
+		movieid[60027274]
+		trkid[null]
+		ssv[]
+		desc[]
+		svr[%7B108%7D]
+	]
+
+21 - POST http://www.netflix.com/nccp/controller
+
+	Cookies
+	[
+		VisitorId=452d8682-a1ff-41a3-91b4-8d009523e263;...
+    ]
+
+	Headers
+	[
+		X-CTicket=AQAAAA...
+	]
+
+	Post Data
+	[
+		<?xml version["1.0" encoding="utf-8"?>
+		<nccp:request version="2.4" xmlns:nccp="http://www.netflix.com/eds/nccp/2.4">
+			<nccp:header>
+				<nccp:softwareversion>1.0.9.2</nccp:softwareversion>
+				<nccp:payload>AhBRDgmkM...</nccp:payload>
+			</nccp:header>
+			<nccp:playdata>
+				<nccp:lticket>AQAA...</nccp:lticket>
+				<nccp:payload>AhBp7Bz...</nccp:payload>
+			</nccp:playdata>
+		</nccp:request>
+	]
+
+	Response
+	[
+		<?xml version="1.0" encoding="utf-8"?>
+		<nccp:response xmlns:nccp="http://www.netflix.com/eds/nccp/2.4" version="2.4">
+			<nccp:parameters>
+				<nccp:retrycontrol>10</nccp:retrycontrol>
+				<nccp:mintimeout>60</nccp:mintimeout>
+				<nccp:lowfrequencypollinterval>28800</nccp:lowfrequencypollinterval>
+				<nccp:mediumfrequencypollinterval>60</nccp:mediumfrequencypollinterval>
+				<nccp:supportphone>866-579-7113</nccp:supportphone>
+			</nccp:parameters>
+			<nccp:result method="playdata">
+				<nccp:status>
+					<nccp:success>true</nccp:success>
+				</nccp:status>
+			</nccp:result>
+			<nccp:responseheader>
+				<nccp:payload>AhC3X9....</nccp:payload>
+			</nccp:responseheader>
+		</nccp:response>
+	]
